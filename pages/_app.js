@@ -6,8 +6,23 @@ import Footer from "@/components/Footer";
 
 import { Provider } from "react-redux";
 import store from "@/store/store";
+import { useState, useEffect } from "react";
+import { fetchDataFromApi } from "@/utils/api";
 
 export default function App({ Component, pageProps }) {
+  const [isCategoryLoaded, setIsCategoryLoaded] = useState(false);
+  const [categories, setCategories] = useState(null);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    const { data } = await fetchDataFromApi("/api/categories?populate=*");
+    setCategories(data);
+    setIsCategoryLoaded(true);
+  };
+
   return (
     <>
       <Head>
@@ -26,11 +41,21 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <Provider store={store}>
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
-      </Provider>
+
+      {!isCategoryLoaded && (
+        <div className="absolute top-0 left-0 w-full h-full bg-white/[0.5] flex flex-col gap-5 justify-center items-center">
+          <img src="/logo.svg" width={150} />
+          <span className="text-2xl font-medium">Loading...</span>
+        </div>
+      )}
+
+      {isCategoryLoaded && (
+        <Provider store={store}>
+          <Header categories={categories} />
+          <Component {...pageProps} />
+          <Footer />
+        </Provider>
+      )}
     </>
   );
 }
