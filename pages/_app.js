@@ -18,7 +18,16 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   const fetchCategories = async () => {
-    const { data } = await fetchDataFromApi("/api/categories?populate=*");
+    // const { data } = await fetchDataFromApi("/api/categories?populate=*");
+
+    const res = await fetch(
+      "https://custom-hooks-e6a02-default-rtdb.firebaseio.com/data.json"
+    );
+
+    const data = await res.json();
+
+    console.log(data);
+
     setCategories(data);
     setIsCategoryLoaded(true);
   };
