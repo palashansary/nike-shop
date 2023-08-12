@@ -6,7 +6,7 @@ Welcome to the Nike Shoe Store App Clone! This is a clone of the Nike shoe store
 
 ![Demo Image](nikeclone.png)
 
-Check out the live demo of the app: [Live Demo](https://shoe-store-frontend-cyan.vercel.app/)
+Check out the live demo of the app: [Live Demo](https://nike-shop-eta.vercel.app/)
 
 ## Features
 
